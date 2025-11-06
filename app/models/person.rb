@@ -3,5 +3,5 @@ class Person < ApplicationRecord
 
   validates :name, presence: true
   validates :email, presence: true
-  validates :contractor, presence: true
+  validates :company, presence: true, if: :employee?
 end

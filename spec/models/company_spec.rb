@@ -1,9 +1,10 @@
 require "rails_helper"
 
 RSpec.describe Company, type: :model do
-  subject { described_class.new }
+  # subject { described_class.new }
 
   describe "associations" do
+    it { is_expected.to have_many(:employees).class_name("Person") }
   end
 
   describe "validations" do
