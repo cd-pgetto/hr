@@ -1,20 +1,35 @@
+# == Schema Information
+#
+# Table name: people
+#
+#  id         :bigint           not null, primary key
+#  email      :string           not null
+#  employee   :boolean          default(TRUE), not null
+#  name       :string           not null
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#  company_id :bigint
+#
+# Indexes
+#
+#  index_people_on_company_id  (company_id)
+#  index_people_on_email       (email) UNIQUE
+#
+# Foreign Keys
+#
+#  fk_rails_...  (company_id => companies.id)
+#
 FactoryBot.define do
   factory :person do
-    employee { true }
     name { "John Doe" }
     email { "person@example.com" }
-    company { nil }
 
     factory :employee do
-      employee { true }
       email { "employee@example.com" }
-      company { nil }
     end
 
     factory :consultant do
-      employee { false }
       email { "consultant@example.com" }
-      company { nil }
     end
   end
 end

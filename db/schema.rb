@@ -14,32 +14,36 @@ ActiveRecord::Schema[8.1].define(version: 2025_11_06_122537) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
+  # Custom types defined in this database.
+  # Note that some types may not work with other database engines. Be careful if changing database.
+  create_enum "employment_type", ["employee", "contractor"]
+
   create_table "companies", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.string "name", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "company_people", force: :cascade do |t|
+  create_table "employments", force: :cascade do |t|
     t.bigint "company_id", null: false
     t.datetime "created_at", null: false
+    t.enum "employment_type", null: false, enum_type: "employment_type"
     t.bigint "person_id", null: false
     t.datetime "updated_at", null: false
-    t.index ["company_id"], name: "index_company_people_on_company_id"
-    t.index ["person_id"], name: "index_company_people_on_person_id"
+    t.index ["company_id", "person_id"], name: "index_employments_on_company_id_and_person_id", unique: true
+    t.index ["company_id"], name: "index_employments_on_company_id"
+    t.index ["person_id", "employment_type"], name: "index_employments_on_person_id_and_employment_type"
+    t.index ["person_id"], name: "index_employments_on_person_id"
   end
 
   create_table "people", force: :cascade do |t|
-    t.bigint "company_id"
     t.datetime "created_at", null: false
     t.string "email", null: false
-    t.boolean "employee", default: true, null: false
     t.string "name", null: false
     t.datetime "updated_at", null: false
-    t.index ["company_id"], name: "index_people_on_company_id"
+    t.index ["email"], name: "index_people_on_email", unique: true
   end
 
-  add_foreign_key "company_people", "companies"
-  add_foreign_key "company_people", "people"
-  add_foreign_key "people", "companies"
+  add_foreign_key "employments", "companies"
+  add_foreign_key "employments", "people"
 end
