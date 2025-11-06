@@ -1,6 +1,6 @@
-class CreateCompanyPersons < ActiveRecord::Migration[8.1]
+class CreateCompanyPeople < ActiveRecord::Migration[8.1]
   def change
-    create_table :company_persons do |t|
+    create_table :company_people do |t|
       t.belongs_to :company, null: false, foreign_key: true
       t.belongs_to :person, null: false, foreign_key: true
 

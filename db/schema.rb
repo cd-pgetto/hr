@@ -20,13 +20,13 @@ ActiveRecord::Schema[8.1].define(version: 2025_11_06_122537) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "company_persons", force: :cascade do |t|
+  create_table "company_people", force: :cascade do |t|
     t.bigint "company_id", null: false
     t.datetime "created_at", null: false
     t.bigint "person_id", null: false
     t.datetime "updated_at", null: false
-    t.index ["company_id"], name: "index_company_persons_on_company_id"
-    t.index ["person_id"], name: "index_company_persons_on_person_id"
+    t.index ["company_id"], name: "index_company_people_on_company_id"
+    t.index ["person_id"], name: "index_company_people_on_person_id"
   end
 
   create_table "people", force: :cascade do |t|
@@ -39,7 +39,7 @@ ActiveRecord::Schema[8.1].define(version: 2025_11_06_122537) do
     t.index ["company_id"], name: "index_people_on_company_id"
   end
 
-  add_foreign_key "company_persons", "companies"
-  add_foreign_key "company_persons", "people"
+  add_foreign_key "company_people", "companies"
+  add_foreign_key "company_people", "people"
   add_foreign_key "people", "companies"
 end
